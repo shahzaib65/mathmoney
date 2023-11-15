@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "934520177210",
+    "project_id": "mathmoney-f58a2",
+    "storage_bucket": "mathmoney-f58a2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:934520177210:android:00d6898e6be17e30402b03",
+        "android_client_info": {
+          "package_name": "com.mathmoney"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "934520177210-pkq7htfeselsgljtshfnl5ojnce9tc2s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mathmoney",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "934520177210-23or782ejkd9hd8sm5i0s4of8f07j3l7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDN36SBl-bGooTGhMWtIgnye1EBCMMRARc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "934520177210-23or782ejkd9hd8sm5i0s4of8f07j3l7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
