@@ -14,6 +14,7 @@ const navigation = useNavigation();
 
     const checkGoogleSignIn = async () => {
         const isSignedIn = await GoogleSignin.isSignedIn();
+        console.log(isSignedIn)
         if (isSignedIn) {
           navigation.navigate('Home');
         }else{

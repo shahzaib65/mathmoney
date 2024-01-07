@@ -16,16 +16,16 @@ export default function Home ({navigation}) {
   const [currentLongitude, setCurrentLongitude] = useState('');
   const [ currentLatitude,setCurrentLatitude] = useState('');
   const [locationStatus, setLocationStatus ] = useState('');
-  const [dayData, setdayData] = useState('today')
+  const [dayData, setdayData] = useState('Today')
   const [userLoading, setUserLoading] = useState(true);
   const showCustomAlert = async () => {
     const result = await showAlert(
       'Select an option:',
       'Choose one of the following options:',
       [
-        { text: 'Today', onPress: () => handleOption('today') },
-        { text: 'Yesterday', onPress: () => handleOption('yesterday') },
-        { text: 'Tomorrow', onPress: () => handleOption('tomorrow') },
+        { text: 'Today', onPress: () => handleOption('Today') },
+        { text: 'Tomorrow', onPress: () => handleOption('Tomorrow') }
+        
       ],
       {
         cancelable: true,
@@ -35,23 +35,26 @@ export default function Home ({navigation}) {
 
   const handleOption = (selectedOption) => {
     setdayData(selectedOption)
-    fetchData()
+    fetchData(selectedOption)
   };
 
 
   useEffect(()=>{
-      fetchData() 
+      fetchData(dayData) 
   },[])
 
-   const fetchData = async() => {
-    const response = await fetch(`https://astro-app-backend-kie26bslwq-uc.a.run.app/koosappa/${dayData}/nse`, {
+   const fetchData = async(day) => {
+    console.log("Day=>",day)
+    const response = await fetch(`https://astro-app-backend-kie26bslwq-uc.a.run.app/${day}`, {
       method: 'GET',
       headers: {
           'Content-Type': 'application/json'
       }
   });
+  
   const json = await response.json()
-    setdata(json.result.data)
+  // console.log(json.result)
+    setdata(json.result)
     setUserLoading(false)
    }
 
@@ -191,7 +194,7 @@ Snackbar.show({
         <View className=" flex flex-row justify-between mt-5">
           {/* DropDown View */}
           <TouchableOpacity onPress={showCustomAlert} className=" w-auto ml-4 px-4 py-2 flex flex-row rounded-lg bg-[#1E90FF] justify-evenly">
-            <Text className=" text-white font-normal mr-4">Today</Text>
+            <Text className=" text-white font-normal mr-4">{dayData}</Text>
             <Image source={require("../assets/expand.png")} className=" w-5 h-5"/>
        
           </TouchableOpacity>
@@ -267,14 +270,23 @@ Snackbar.show({
           </View>
         </View>
 
-  <View className=" mt-3 mx-2 flex-row flex justify-around">
-  <Text className=" text-white mx-2 font-normal text-sm">Time</Text>
-  <Text className=" text-white mx-1 font-normal text-sm">Planet</Text>
+ 
+ <View className=" mt-3 mx-2 flex-row flex justify-around">
+ <ScrollView horizontal={true}>
+ <Text className=" text-white  mx-3 font-normal text-sm">Time</Text>
+  <Text className=" text-white mx-4 font-normal text-sm">ASC</Text>
+  <Text className=" text-white mx-5 font-normal text-sm">S</Text>
+  <Text className=" text-white mx-7 font-normal text-sm">M</Text>
+  <Text className=" text-white mx-3 font-normal text-sm">XL</Text>
+  <Text className=" text-white mx-8 font-normal text-sm">Moon</Text>
+  <Text className=" text-white mx-5 font-normal text-sm">Planet</Text>
   <Text className=" text-white mx-4 font-normal text-sm">S</Text>
   <Text className=" text-white mx-4 font-normal text-sm">M</Text>
   <Text className=" text-white mx-4 font-normal text-sm">XL</Text>
-  <Text className=" text-white mx-5 font-normal text-sm">Trader</Text>
+ </ScrollView>
+  
   </View>
+ 
 
   <View>
     {userLoading? (<Loading/>): (
@@ -282,31 +294,46 @@ Snackbar.show({
       <View>
       {data.map((element,index)=>{
         return(
-          <View key={index} className=" flex flex-row mx-3 justify-around">
-   <View className="rounded-md bg-[#333333] py-1 ml-0 mt-2 w-10">
+         <ScrollView horizontal={true}>
+         <View key={index} className=" flex flex-row mx-3 justify-around">
+   <View className="rounded-md bg-[#333333] py-1 mx-2 mt-2 w-10">
               <Text className=" text-center text-white text-sm px-0">{element.Time}</Text>
             </View>
-            <View className="rounded-md bg-[#333333] py-1 ml-0 mt-2 w-10">
-              <Text className=" text-center text-white text-sm px-0">{element.Planet}</Text>
+            <View className="rounded-md bg-[#333333] mx-2 py-1  mt-2 w-10">
+              <Text className=" text-center text-white text-sm px-0">{element.SL_of_Lagna}</Text>
             </View>
 
-            <View className="rounded-md bg-[#333333] py-1 ml-0 mt-2 w-10">
-              <Text className=" text-center text-white text-sm px-0">{element.RL_of_Lagna_S}</Text>
+            <View className="rounded-md bg-[#333333] py-1 mx-2 mt-2 w-10">
+              <Text className=" text-center text-white text-sm px-0">{element.SL_Lagna_Lordship}</Text>
             </View>
 
-            <View className="rounded-md bg-[#333333] py-1 ml-0 mt-2 w-10">
-              <Text className=" text-center text-white text-sm px-0">{element.NL_of_Lagna_M}</Text>
+            <View className="rounded-md bg-[#333333] py-1 mx-2 mt-2 w-10">
+              <Text className=" text-center text-white text-sm px-0">{element.SL_Lagna_Starlord_Ownership}</Text>
             </View>
 
-            <View className="rounded-md bg-[#333333] py-1  mr-0 mt-2 w-10">
-              <Text className=" text-center text-white text-sm px-0">{element.SL_of_Lagna_XL}</Text>
+            <View className="rounded-md bg-[#333333] py-1 mx-2  mr-0 mt-2 w-10">
+              <Text className=" text-center text-white text-sm px-0">{element.SL_Lagna_Starlord_Location}</Text>
             </View>
 
-            <View className="rounded-md bg-[#333333] py-1 ml-0 mt-2 w-20">
-              <Text className=" text-center text-white text-sm px-0">{element.Natal_score}</Text>
+            <View className="rounded-md bg-[#333333] py-1 mx-2 mt-2 w-20">
+              <Text className=" text-center text-white text-sm px-0">{element.SL_of_Moon}</Text>
             </View>
+
+            <View className="rounded-md bg-[#333333] py-1 mx-2 mt-2 w-20">
+              <Text className=" text-center text-white text-sm px-0">{element.SL_Moon_Lordship}</Text>
+            </View>
+
+            <View className="rounded-md bg-[#333333] py-1 mx-2 mt-2 w-20">
+              <Text className=" text-center text-white text-sm px-0">{element.SL_Moon_Starlord_Ownerships}</Text>
+            </View>
+
+            <View className="rounded-md bg-[#333333] py-1 mx-2 mt-2 w-20">
+              <Text className=" text-center text-white text-sm px-0">{element.SL_Moon_Starlord_Location}</Text>
+            </View>
+
 
           </View>
+         </ScrollView>
         )
       })}
     </View>
